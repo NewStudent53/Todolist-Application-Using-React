@@ -1,26 +1,48 @@
-import React from "react";
+import React, {useState} from 'react'
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+	const [inputValue, setInputValue] = useState('')
+	const [todos, setTodos] = useState([])
 
-export default Home;
+	return (
+		<div className='container'>
+			<h1> todos </h1>
+			<ul>
+				<li>
+					<input type="text" 
+					onChange={(e) => setInputValue(e.target.value)}
+					value={inputValue}
+					onKeyPress={(e) => {
+						if (e.key === 'Enter') {
+							setTodos(todos.concat([inputValue]))
+							setInputValue('')
+						}
+					}}
+					placeholder="Add a task"
+					/>
+				</li>
+
+				{todos.map((item, index) => (
+					<li>
+						{item}{''}
+						<i
+							class='fas fa-trash-alt' onClick={() =>
+							setTodos(
+								todos.filter(
+									(t, currentIndex) => index != currentIndex //thanks t, yoou are the best letter that's out there
+								)
+							)}></i>
+					</li>
+
+				))}
+			</ul>
+			<p></p>
+			<div>{ todos.length } item left</div>
+		</div>
+	)
+}
+
+export default Home
+
+
+//posdata: Creo que estoy olvidando algo, pero de resto creo que esta muy bien../
